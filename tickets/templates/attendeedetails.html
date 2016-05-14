@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load register_extras %}
+{% block body %}
+
+<script type="text/javascript">
+	$(function() {
+		$(".inline.{{ attendees_form.prefix }}").formset({
+			prefix: "{{ attendees_form.prefix }}",
+		})
+	})
+</script>
+
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p style="text-align:center"> 7th International Summer School on Information Security and Protection</p>
+            </div>
+            <div class="panel-body">
+            <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+
+            <input type="submit" value="Add recipe" class="submit" />
+            </form>
+
+            </div>
+            <div class="panel-footer">
+                <p style="text-align:center"> Contact : Mr Vipin Pavithran  <i class="fa fa-phone"></i> 94470490804</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock body %}

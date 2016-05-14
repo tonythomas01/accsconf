@@ -91,3 +91,25 @@ class User(AbstractBaseUser):
     def __unicode__(self):
         return self.username
 
+
+class Ticket(models.Model):
+    """
+    Ticket model
+    """
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(_('Your Name'), max_length=100, blank=False, unique=False)
+    institution = models.CharField(_('Your Institution'), max_length=100, blank=False, unique=False)
+    designation = models.CharField(_('Your Designation'), max_length=100, blank=False, unique=False)
+    email = models.CharField(_('Your Email'), max_length=100, blank=False, unique=False)
+    phone = models.CharField(_('Your Phone'), max_length=100, blank=False, unique=False)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Attendee(models.Model):
+    ticket = models.ForeignKey(Ticket)
+    name = models.CharField(_('Name'), max_length=100, blank=False, unique=False)
+    email = models.CharField(_('Email'), max_length=100, blank=False, unique=False)
+
+

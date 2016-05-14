@@ -19,6 +19,6 @@ import tickets.views as views
 from tickets.views import *
 
 urlpatterns = [
-    url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'^$', home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
 ]

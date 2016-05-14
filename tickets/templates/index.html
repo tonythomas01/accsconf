@@ -1,9 +1,107 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load register_extras %}
 {% block body %}
 
+<style>
+	.delete-row {
+		display:inline
+	}
+	.add-row {
+		font: bold 11px Arial;
+		text-decoration: none;
+		background-color: #EEEEEE;
+		color: #333333;
+		padding: 2px 6px 2px 6px;
+		border-top: 1px solid #CCCCCC;
+		border-right: 1px solid #333333;
+		border-bottom: 1px solid #333333;
+		border-left: 1px solid #CCCCCC;
+	}
+</style>
 <div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<p style="text-align:center"> 7th International Summer School on Information Security and Protection</p>
+			</div>
+			<div class="panel-body">
 
-    This is the body
+				{% if messages %}
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+				{% endif %}
+
+				<form method="post">
+								{% csrf_token %} {% load tz %}
+          							{% for field in ticket_form.visible_fields %}
+          							<div id="div_{{ field.html_name }}"
+          									class="form-group{% if field.errors %} has-error{% endif%}">
+          									<label class="col-sm-4 control-label" for="{{ field.id_for_label }}">
+          											{{ field.label }}
+          									</label>
+          						<div class="col-md-6 cnt-inpt">
+          							{{ field|addcss:"form-control" }}
+          							<div class="text-muted pull-right">
+          													<small>{{ field.help_text }}</small>
+          											</div> <!-- form-group -->
+          											<span class="help-block">
+          													{% for error in field.errors %} {{error }} {% endfor %}
+          											</span> <!-- help-block -->
+          									</div> <!-- col-sm-4 -->
+          					</div>
+          					{% endfor %}
+
+					{{ attendee_formset.management_form }}
+					{% for link_form in attendee_formset %}
+					<div class="link-formset form-inline">
+
+						{{ link_form.name|addcss:"form-control"  }}
+						{% if link_form.name.errors %}
+						{% for error in link_form.name.errors %}
+						{{ error|escape }}
+						{% endfor %}
+
+						{% endif %}
+						{{ link_form.email|addcss:"form-control" }}
+						{% if link_form.email.errors %}
+
+						{% for error in link_form.email.errors %}
+						{{ error|escape }}
+						{% endfor %}
+						{% endif %}
+
+
+					{% endfor %}
+
+					{% if attendee_formset.non_form_errors %}
+					{% for error in attendee_formset.non_form_errors %}
+					{{ error|escape }}
+					{% endfor %}
+					{% endif %}
+						</div>
+					<div class="form-group" style="padding-top:30px; text-align:center">
+					<input type="submit" value="Buy Now" class="btn btn-primary"/>
+						</div>
+				</form>
+				</div>
+
+				<!-- Include formset plugin - including jQuery dependency -->
+				<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+				<script src="{% static 'js/jquery.formset.js' %}"></script>
+				<script>
+    $('.link-formset').formset({
+        addText: 'add',
+        deleteText: 'remove'
+    });
+</script>
+
+			<div class="panel-footer">
+				<p style="text-align:center"> Contact : Mr Vipin Pavithran  <i class="fa fa-phone"></i> 94470490804</p>
+			</div>
+		</div>
+
+	</div>
 </div>
 {% endblock body %}
